@@ -6,11 +6,10 @@ This Docker image runs an Alpine linux in a QEMU virtual machine so the docker d
 # How to
 ```sh
 docker run -it -v ./entrypoint:/ext/entrypoint eltorio/alpine-nested-qemu-docker  
-./entrypoint is a mandatory shell script. It will be run after docker and ntpd services in the Alpine virtual machine
 ```
+`./entrypoint` is a mandatory shell script. It will be run after docker and ntpd services in the Alpine virtual machine
 
 # Demo
-
 For launching busybox:latest in the non privileged image:
 ```sh
 make build
