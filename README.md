@@ -22,3 +22,4 @@ While connected to the qemu container you can reach the nested Alpine vm with
 telnet localhost
 ```
 hit enter and connect as root
+For leaving telnet hit CTRL+$ and quit
