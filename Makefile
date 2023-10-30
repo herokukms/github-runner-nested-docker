@@ -43,10 +43,13 @@ launch-tianon: join
 		-e QEMU_CDROM=/tmp/alpine.iso \
 		-e QEMU_BOOT='order=c' \
 		-e QEMU_PORTS='2375 2376' \
-		tianon/qemu  start-qemu -virtfs local,path=/ext,mount_tag=host0,security_model=passthrough,id=host0
+		tianon/qemu  start-qemu -virtfs local,path=/ext,mount_tag=host0,security_model=passthrough,id=host0 -serial telnet:127.0.0.1:23,server,nowait
 
 demo: join
-	docker run -it -v ./demo-entrypoint:/ext/entrypoint:ro eltorio/alpine-nested-qemu-docker:1.0.2
+	docker run -it -v ./demo-entrypoint:/ext/entrypoint:ro eltorio/alpine-nested-qemu-docker:1.0.3
 
 build: join
-	docker build -t eltorio/alpine-nested-qemu-docker:1.0.2 .
+	docker build -t eltorio/alpine-nested-qemu-docker:1.0.3 .
+
+test: build
+	docker run -it -v ./demo-entrypoint:/ext/entrypoint:ro eltorio/alpine-nested-qemu-docker:1.0.3 /bin/bash
