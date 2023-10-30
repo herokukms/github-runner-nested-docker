@@ -46,7 +46,7 @@ launch-tianon: join
 		tianon/qemu  start-qemu -virtfs local,path=/ext,mount_tag=host0,security_model=passthrough,id=host0
 
 demo: join
-	docker run -it -v ./demo-entrypoint:/ext/entrypoint eltorio/alpine-nested-qemu-docker:1.0.0
+	docker run -it -v ./demo-entrypoint:/ext/entrypoint:ro eltorio/alpine-nested-qemu-docker:1.0.2
 
 build: join
-	docker build -t eltorio/alpine-nested-qemu-docker:1.0.0 .
+	docker build -t eltorio/alpine-nested-qemu-docker:1.0.2 .
