@@ -23,3 +23,64 @@ telnet localhost
 ```
 hit enter and connect as root
 For leaving telnet hit CTRL+$ and quit
+
+# Kubernetes sample deployement
+This launch 10 replicas of busybox:latest on Kubernetes
+```yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: heartbeat
+  namespace: 
+type: Opaque
+stringData:
+  now: "1698685516"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: entrypoint
+data:
+  entrypoint: |
+    #!/bin/sh
+    while (! docker stats --no-stream ); do
+      # Docker takes a few seconds to initialize
+      echo "Waiting for Docker to launch..."
+      sleep 1
+    done
+    docker run -it busybox:latest
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: busybox-tester
+  labels:
+    app: busybox-tester
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox-tester
+  template:
+    metadata:
+      labels:
+        app: busybox-tester
+    spec:
+      containers:
+      - name: busybox-tester
+        image: eltorio/alpine-nested-qemu-docker:latest
+        volumeMounts:
+        - name: entrypoint
+          mountPath: /ext
+        env:
+          - name: TIMESTAMP
+            value: "1698685516"
+#        securityContext:
+#          privileged: true
+      volumes:
+      - name: entrypoint
+        configMap: 
+          name: entrypoint
+          defaultMode: 0777
+```
