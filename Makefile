@@ -77,4 +77,4 @@ build: join
 	docker build -t herokukms/github-runner-nested:1.0.0 .
 
 test: build
-	docker run -it -v ./demo-entrypoint:/ext/entrypoint:ro github-runner-nested:1.0.0 /bin/bash
+	docker run -it -v ./demo-entrypoint:/ext/entrypoint:ro herokukms/github-runner-nested:1.0.0 /bin/bash
