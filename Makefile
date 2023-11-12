@@ -8,6 +8,13 @@ split:
 	rm sources/disk/hda.qcow2-part*
 	split -b 10M sources/hda.qcow2 sources/disk/hda.qcow2-part
 
+joinbase: 
+	cat sources/base/hda.qcow2-part* > sources/hda.qcow2
+
+splitbase:
+	rm sources/base/hda.qcow2-part*
+	split -b 10M sources/hda.qcow2 sources/base/hda.qcow2-part
+
 launch-tianon-it: join
 	echo "Useful for shrinking the hda image"
 	echo "cd /tmp"
