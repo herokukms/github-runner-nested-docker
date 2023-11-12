@@ -71,10 +71,10 @@ launch-tianon: join
 		tianon/qemu  start-qemu -virtfs local,path=/ext,mount_tag=host0,security_model=passthrough,id=host0 -serial telnet:127.0.0.1:23,server,nowait
 
 demo: join
-	docker run -it -v ./demo-entrypoint:/ext/entrypoint:ro eltorio/alpine-nested-qemu-docker:1.0.3
+	./test.sh
 
 build: join
-	docker build -t eltorio/alpine-nested-qemu-docker:1.0.3 .
+	docker build -t herokukms/github-runner-nested:1.0.0 .
 
 test: build
-	docker run -it -v ./demo-entrypoint:/ext/entrypoint:ro eltorio/alpine-nested-qemu-docker:1.0.3 /bin/bash
+	docker run -it -v ./demo-entrypoint:/ext/entrypoint:ro github-runner-nested:1.0.0 /bin/bash
